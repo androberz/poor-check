@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>org.aber.plugins.poorcheck</id>
+    <name>Poor Check</name>
+    <vendor email="androberz@gmail.com" url="https://www.linkedin.com/in/andrey-berezin-16ba5985/">Andrey Berezin</vendor>
+
+    <description><![CDATA[
+    <p>Warn of possible poor code usage in Java.</p></br>
+
+    <p>Code usage cases to cover:</p></br>
+
+    <p>1. Not overridden toString() call;</p>
+    <p>2. Not overridden equals() call;</p>
+    <p>3. java.util.Optional isPresent() always returns true;</p>
+    <p>4. Class with not overridden equals()/hashCode() methods is used as a key in a hash structures (including java.util.stream.Collectors toMap());</p>
+    </br>
+    <p>When an above case occurs the warning is shown.</p>
+    <p>An action to generate the missed code is proposed (Alt + Enter)</p>
+
+    ]]></description>
+
+    <version>1.0.0</version>
+
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <annotator language="JAVA" implementationClass="org.aber.plugins.poorcheck.annotators.PoorCheckAnnotator"/>
+    </extensions>
+
+    <actions>
+    </actions>
+</idea-plugin>

@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.8'
+}
+
+group 'org.aber.plugins'
+version '1.0.0'
+
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main {
+        java.srcDirs 'src/main/java'
+        resources.srcDirs 'src/main/resources'
+    }
+    test {
+        java.srcDir 'src/test/java'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+test {
+    systemProperty 'idea.home.path', project.property("idea.home.path")
+
+    // set heap size for the test JVM(s)
+    minHeapSize = "128m"
+    maxHeapSize = "512m"
+}
+
+intellij {
+    version '2018.1'
+    sandboxDirectory = "$project.buildDir/poorcheck-sandbox"
+}
+
+patchPluginXml {
+    changeNotes """ """
+}
