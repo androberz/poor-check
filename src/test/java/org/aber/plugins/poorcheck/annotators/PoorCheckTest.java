@@ -16,6 +16,8 @@ public class PoorCheckTest extends LightCodeInsightFixtureTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        PsiTestUtil.addLibrary(myFixture.getModule(), "lombok", getBasePath() + "libs", "lombok-1.18.6.jar");
     }
 
     @Override
@@ -31,7 +33,7 @@ public class PoorCheckTest extends LightCodeInsightFixtureTestCase {
             public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
                 super.configureModule(module, model, contentEntry);
                 String libsPath = getBasePath() + "libs";
-                PsiTestUtil.addLibrary(module, model, "lombok", libsPath, "lombok-1.18.6.jar");
+                PsiTestUtil.addLibrary(module, "lombok", libsPath, "lombok-1.18.6.jar");
             }
 
             @Override
