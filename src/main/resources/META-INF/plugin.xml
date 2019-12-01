@@ -20,8 +20,6 @@
 
     <version>1.0.1</version>
 
-    <idea-version since-build="171.0" until-build="200.1"/>
-
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.java</depends>
 

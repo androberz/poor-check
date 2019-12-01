@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'org.aber.plugins'
-version '1.0.0'
+version '1.0.1'
 
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
@@ -44,10 +44,13 @@ test {
 
 intellij {
     plugins 'java'
-    version '2019.2'
+    version '2019.3'
     sandboxDirectory = "$project.buildDir/poorcheck-sandbox"
+    updateSinceUntilBuild false
 }
 
 patchPluginXml {
+    sinceBuild '171.*'
+    untilBuild '193.*'
     changeNotes """ """
 }
