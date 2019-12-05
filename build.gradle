@@ -1,13 +1,16 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.14'
+    id 'com.github.hierynomus.license' version '0.15.0'
+    id 'com.github.hierynomus.license-base' version '0.15.0'
 }
 
 group 'org.aber.plugins'
-version '1.0.1'
+version '1.0.2'
 
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
+apply plugin: 'license'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -49,8 +52,13 @@ intellij {
     updateSinceUntilBuild false
 }
 
+license {
+    header rootProject.file('LICENSE')
+    strictCheck true
+}
+
 patchPluginXml {
     sinceBuild '171.*'
     untilBuild '193.*'
-    changeNotes """ """
+    changeNotes """ Fixed compatibiltiy issue """
 }
