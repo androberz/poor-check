@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'org.aber.plugins'
-version '1.0.2'
+version '1.0.0'
 
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
@@ -58,7 +58,7 @@ license {
 }
 
 patchPluginXml {
-    sinceBuild '171.*'
+    sinceBuild '181.*'
     untilBuild '193.*'
-    changeNotes """ Fixed compatibiltiy issue """
+    changeNotes """ Addidtional checks for Java code """
 }
