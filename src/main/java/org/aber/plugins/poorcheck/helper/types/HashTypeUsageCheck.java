@@ -25,17 +25,16 @@ import com.google.common.collect.ImmutableList;
 import com.intellij.codeInsight.daemon.impl.quickfix.AddMethodFix;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.psi.PsiClassType;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.PsiTypeVisitor;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTypesUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfInstanceIs;
 import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfNonNull;
+import static org.aber.plugins.poorcheck.helper.CheckUtils.getIfInstanceIs;
 
 public class HashTypeUsageCheck extends AbstractTypeUsageCheck {
 
@@ -56,7 +55,7 @@ public class HashTypeUsageCheck extends AbstractTypeUsageCheck {
 
     @Override
     public void check(PsiType type, AnnotationHolder annotationHolder) {
-        baseTypeCheck(type, new PsiTypeVisitor<Boolean>() {
+        baseTypeCheck(type, new PsiTypeVisitor<>() {
             @Override
             public Boolean visitClassType(PsiClassType classType) {
                 PsiType[] parameters = classType.getParameters();
@@ -78,6 +77,12 @@ public class HashTypeUsageCheck extends AbstractTypeUsageCheck {
         doIfInstanceIs(type, PsiClassType.class, keyType -> {
 
             doIfNonNull(PsiTypesUtil.getPsiClass(keyType), keyTypeClass -> {
+
+                Boolean isTypeParam = getIfInstanceIs(keyTypeClass, PsiTypeParameter.class, param -> true);
+
+                if (Objects.nonNull(isTypeParam) && isTypeParam) {
+                    return;
+                }
 
                 doIfNonNull(getPsiClass(warnElement, JAVA_LANG_OBJECT), psiClass -> {
                     if (methodNotOverridden(psiClass, keyTypeClass, METHOD_HASH_CODE)) {

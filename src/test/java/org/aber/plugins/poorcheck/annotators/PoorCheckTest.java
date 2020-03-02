@@ -105,4 +105,10 @@ public class PoorCheckTest extends LightCodeInsightFixtureTestCase {
 
         myFixture.checkHighlighting();
     }
+
+    public void testHighlightingForTypedHashKeys() {
+        myFixture.configureByFile("TestGenericsWithType.java");
+
+        myFixture.checkHighlighting();
+    }
 }

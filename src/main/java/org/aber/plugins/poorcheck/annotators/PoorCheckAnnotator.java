@@ -61,7 +61,7 @@ public class PoorCheckAnnotator implements Annotator {
                 });
 
                 doIfInstanceIs(element, PsiMethod.class, psiExpression -> {
-                    Arrays.stream(psiExpression.getParameters()).forEach(jvmParameter -> {
+                    Arrays.stream(psiExpression.getParameterList().getParameters()).forEach(jvmParameter -> {
                         doIfInstanceIs(jvmParameter, PsiParameterImpl.class, parameter -> {
                             hashTypeUsageCheck.check(parameter.getType(), holder);
                         });
