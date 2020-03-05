@@ -21,16 +21,18 @@
  */
 package org.aber.plugins.poorcheck.helper.methods;
 
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.impl.source.PsiClassReferenceType;
+import com.intellij.psi.util.PsiTypesUtil;
 import lombok.AllArgsConstructor;
 import org.aber.plugins.poorcheck.helper.AbstractCheck;
 import org.aber.plugins.poorcheck.helper.dto.MethodCallCheckData;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfInstanceIs;
 import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfNonNull;
 
 @AllArgsConstructor
@@ -45,10 +47,14 @@ abstract class AbstractMethodCallCheck extends AbstractCheck implements MethodCa
     }
 
     private Predicate<Integer> argNumberPredicate() {
+        if (Objects.isNull(argNumber)) {
+            return anArgNumber -> true;
+        }
+
         return anArgNumber -> anArgNumber.equals(argNumber);
     }
 
-    void baseMethodCheck(PsiMethodCallExpression methodCallExpression, Consumer<MethodCallCheckData> consumer) {
+    protected void baseMethodCheck(PsiMethodCallExpression methodCallExpression, Consumer<MethodCallCheckData> consumer) {
         doIfNonNull(methodCallExpression.getMethodExpression(), methodExpression -> {
 
             doIfNonNull(methodExpression.getReferenceName(), methodName -> {
@@ -67,15 +73,9 @@ abstract class AbstractMethodCallCheck extends AbstractCheck implements MethodCa
                                             .methodExpression(methodExpression)
                                             .psiMethod(psiMethod);
 
-                                    doIfNonNull(methodExpression.getQualifierExpression(), qualifierExpression -> {
+                                    Optional<PsiClass> targetClassOpt = Optional.ofNullable(methodExpression.getType()).map(PsiTypesUtil::getPsiClass);
 
-                                        doIfInstanceIs(qualifierExpression.getType(), PsiClassReferenceType.class, targetClass -> {
-
-                                            doIfNonNull(targetClass.resolve(), methodCallCheckDataBuilder::targetClass);
-
-                                        });
-
-                                    });
+                                    targetClassOpt.ifPresent(methodCallCheckDataBuilder::targetClass);
 
                                     consumer.accept(methodCallCheckDataBuilder.build());
                                 });

@@ -25,6 +25,7 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiParameterImpl;
+import org.aber.plugins.poorcheck.helper.assignment.HashTypeAssignmentCheck;
 import org.aber.plugins.poorcheck.helper.methods.*;
 import org.aber.plugins.poorcheck.helper.types.HashTypeUsageCheck;
 import org.aber.plugins.poorcheck.helper.types.TypeUsageCheck;
@@ -41,6 +42,7 @@ public class PoorCheckAnnotator implements Annotator {
     private final MethodCallCheck isPresentCheck = new IsPresentCallCheck();
     private final TypeUsageCheck hashTypeUsageCheck = new HashTypeUsageCheck();
     private final MethodCallCheck toMapCollectorCheck = new StreamToMapCollectorCallCheck();
+    private final HashTypeAssignmentCheck hashTypeAssignmentCheck = new HashTypeAssignmentCheck();
 
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
@@ -52,6 +54,7 @@ public class PoorCheckAnnotator implements Annotator {
                     equalsCallCheck.check(psiMethodCallExpression, holder);
                     isPresentCheck.check(psiMethodCallExpression, holder);
                     toMapCollectorCheck.check(psiMethodCallExpression, holder);
+                    hashTypeAssignmentCheck.check(psiMethodCallExpression, holder);
                 });
 
                 doIfInstanceIs(element, PsiExpression.class, psiExpression -> {

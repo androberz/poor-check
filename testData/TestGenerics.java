@@ -1,6 +1,7 @@
 import java.lang.*;
 import java.util.*;
 import lombok.EqualsAndHashCode;
+import com.google.common.collect.ImmutableSet;
 
 public class TestGenerics {
 
@@ -21,6 +22,9 @@ public class TestGenerics {
 
         Set<String> goodSet2 = new HashSet<>();
         System.out.println(goodSet2);
+
+        Set<TestGenerics> guavaBadSet1 = <warning descr="Not overridden equals()"><warning descr="Not overridden hashCode()">ImmutableSet.of(new TestGenerics())</warning></warning>;
+//        Set<TestGenerics> guavaBadSet2 = ImmutableSet.<TestGenerics> builder().add(new TestGenerics()).build();
     }
 
     public static class TestGenericsWithHashCode {
