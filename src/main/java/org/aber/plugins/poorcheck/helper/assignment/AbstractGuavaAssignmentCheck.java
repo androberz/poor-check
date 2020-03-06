@@ -21,18 +21,30 @@
  */
 package org.aber.plugins.poorcheck.helper.assignment;
 
-import com.google.common.collect.ImmutableMap;
+import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
 
-public class GuavaSetAssignmentCheck extends AbstractGuavaAssignmentCheck {
+import java.util.Map;
 
-    private static final String CLASS_IMMUTABLE_SET = "com.google.common.collect.ImmutableSet";
-    private static final String METHOD_OF = "of";
-    private static final String METHOD_BUILDER = "builder";
+import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfInstanceIs;
 
-    public GuavaSetAssignmentCheck() {
-        super(CLASS_IMMUTABLE_SET, ImmutableMap.<String, Integer> builder()
-                .put(METHOD_OF, -1)
-                .put(METHOD_BUILDER, 0)
-                .build());
+public abstract class AbstractGuavaAssignmentCheck extends AbstractAssignmentCheck {
+
+    protected AbstractGuavaAssignmentCheck(String jdkClassName, Map<String, Integer> methodNameAndArgsNumber) {
+        super(jdkClassName, methodNameAndArgsNumber);
+    }
+
+    @Override
+    public void check(PsiMethodCallExpression methodCallExpression, AnnotationHolder annotationHolder) {
+        baseMethodCheck(methodCallExpression, methodCallCheckData -> {
+
+            doIfInstanceIs(methodCallExpression, PsiMethodCallExpressionImpl.class, builderCallExpression -> {
+
+                checkExpressionInferredType(builderCallExpression, annotationHolder);
+
+            });
+
+        });
     }
 }

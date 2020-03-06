@@ -1,6 +1,7 @@
 import java.lang.*;
 import java.util.*;
 import lombok.EqualsAndHashCode;
+import com.google.common.collect.ImmutableMap;
 
 public class TestMaps {
 
@@ -21,6 +22,11 @@ public class TestMaps {
 
         Map<String, Integer> goodMap2 = new HashMap<>();
         System.out.println(goodMap2);
+
+        Map<TestMaps, String> guavaBadMap1 = <warning descr="Not overridden equals()"><warning descr="Not overridden hashCode()">ImmutableMap.of(new TestMaps(), "")</warning></warning>;
+        Map<TestMapsWithHashCodeAndEquals, String> guavaGoodMap1 = ImmutableMap.of(new TestMapsWithHashCodeAndEquals(), "");
+        Map<TestMaps, String> guavaBadMap2 = <warning descr="Not overridden equals()"><warning descr="Not overridden hashCode()">ImmutableMap.<TestMaps, String> builder()</warning></warning>.put(new TestMaps(), "").build();
+        Map<TestMapsWithHashCodeAndEquals, String> guavaGoodMap2 = ImmutableMap.<TestMapsWithHashCodeAndEquals, String> builder().put(new TestMapsWithHashCodeAndEquals(), "").build();
     }
 
     public static class TestMapsWithHashCode {

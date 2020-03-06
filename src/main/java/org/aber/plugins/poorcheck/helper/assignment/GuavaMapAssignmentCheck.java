@@ -23,14 +23,14 @@ package org.aber.plugins.poorcheck.helper.assignment;
 
 import com.google.common.collect.ImmutableMap;
 
-public class GuavaSetAssignmentCheck extends AbstractGuavaAssignmentCheck {
+public class GuavaMapAssignmentCheck extends AbstractGuavaAssignmentCheck {
 
-    private static final String CLASS_IMMUTABLE_SET = "com.google.common.collect.ImmutableSet";
+    private static final String CLASS_IMMUTABLE_MAP = "com.google.common.collect.ImmutableMap";
     private static final String METHOD_OF = "of";
     private static final String METHOD_BUILDER = "builder";
 
-    public GuavaSetAssignmentCheck() {
-        super(CLASS_IMMUTABLE_SET, ImmutableMap.<String, Integer> builder()
+    public GuavaMapAssignmentCheck() {
+        super(CLASS_IMMUTABLE_MAP, ImmutableMap.<String, Integer> builder()
                 .put(METHOD_OF, -1)
                 .put(METHOD_BUILDER, 0)
                 .build());
