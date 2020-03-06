@@ -21,6 +21,7 @@
  */
 package org.aber.plugins.poorcheck.helper.methods;
 
+import com.google.common.collect.ImmutableMap;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
@@ -39,7 +40,7 @@ public class IsPresentCallCheck extends AbstractMethodCallCheck {
     private final String warnMessage = "Possibly always true";
 
     public IsPresentCallCheck() {
-        super(JAVA_UTIL_OPTIONAL, METHOD_IS_PRESENT, 0);
+        super(JAVA_UTIL_OPTIONAL, ImmutableMap.of(METHOD_IS_PRESENT, 0));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class IsPresentCallCheck extends AbstractMethodCallCheck {
             doIfInstanceIs(methodExpression.getFirstChild(), PsiMethodCallExpressionImpl.class, expressionBeforeMethod -> {
 
                 doIfNonNull(expressionBeforeMethod.getType(), expressionType -> {
-                    Boolean shouldWarn = expressionType.accept(new PsiTypeVisitor<Boolean>() {
+                    Boolean shouldWarn = expressionType.accept(new PsiTypeVisitor<>() {
                         @Override
                         public Boolean visitClassType(PsiClassType classType) {
                             PsiType[] parameters = classType.getParameters();

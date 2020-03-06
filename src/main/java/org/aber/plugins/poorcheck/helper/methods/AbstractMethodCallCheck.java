@@ -28,7 +28,7 @@ import lombok.AllArgsConstructor;
 import org.aber.plugins.poorcheck.helper.AbstractCheck;
 import org.aber.plugins.poorcheck.helper.dto.MethodCallCheckData;
 
-import java.util.Objects;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -39,15 +39,16 @@ import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfNonNull;
 abstract class AbstractMethodCallCheck extends AbstractCheck implements MethodCallCheck {
 
     protected String jdkClassName;
-    protected String methodName;
-    protected Integer argNumber;
+    protected Map<String, Integer> methodNameAndArgsNumber;
 
     private Predicate<String> methodNamePredicate() {
-        return aMethodName -> aMethodName.equals(methodName);
+        return aMethodName -> methodNameAndArgsNumber.containsKey(aMethodName);
     }
 
-    private Predicate<Integer> argNumberPredicate() {
-        if (Objects.isNull(argNumber)) {
+    private Predicate<Integer> argNumberPredicate(String methodName) {
+        Integer argNumber = methodNameAndArgsNumber.get(methodName);
+
+        if (argNumber < 0) {
             return anArgNumber -> true;
         }
 
@@ -61,7 +62,7 @@ abstract class AbstractMethodCallCheck extends AbstractCheck implements MethodCa
 
                 if (methodNamePredicate().test(methodName)) {
 
-                    if (argNumberPredicate().test(methodCallExpression.getArgumentList().getExpressionCount())) {
+                    if (argNumberPredicate(methodName).test(methodCallExpression.getArgumentList().getExpressionCount())) {
 
                         doIfNonNull(methodCallExpression.resolveMethod(), psiMethod -> {
 

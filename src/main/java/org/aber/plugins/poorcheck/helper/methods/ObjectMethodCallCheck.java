@@ -21,6 +21,7 @@
  */
 package org.aber.plugins.poorcheck.helper.methods;
 
+import com.google.common.collect.ImmutableMap;
 import com.intellij.codeInsight.daemon.impl.quickfix.AddMethodFix;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
@@ -33,9 +34,11 @@ import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfNonNull;
 public abstract class ObjectMethodCallCheck extends AbstractMethodCallCheck {
 
     private final String warnMessage = "Not overridden";
+    private final String methodName;
 
     ObjectMethodCallCheck(String methodName, Integer argNumber) {
-        super(JAVA_LANG_OBJECT, methodName, argNumber);
+        super(JAVA_LANG_OBJECT, ImmutableMap.of(methodName, argNumber));
+        this.methodName = methodName;
     }
 
     @Override

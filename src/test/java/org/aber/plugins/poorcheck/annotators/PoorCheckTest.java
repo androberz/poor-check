@@ -29,10 +29,11 @@ import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import com.intellij.util.lang.JavaVersion;
 import org.jetbrains.annotations.NotNull;
 
-public class PoorCheckTest extends LightCodeInsightFixtureTestCase {
+public class PoorCheckTest extends LightJavaCodeInsightFixtureTestCase {
 
     @Override
     protected void setUp() throws Exception {
@@ -61,7 +62,7 @@ public class PoorCheckTest extends LightCodeInsightFixtureTestCase {
 
             @Override
             public Sdk getSdk() {
-                return IdeaTestUtil.getMockJdk18();
+                return IdeaTestUtil.getMockJdk(JavaVersion.compose(11));
             }
         };
     }

@@ -21,6 +21,7 @@
  */
 package org.aber.plugins.poorcheck.helper.methods;
 
+import com.google.common.collect.ImmutableMap;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiMethodCallExpression;
@@ -40,7 +41,7 @@ public class StreamToMapCollectorCallCheck extends AbstractMethodCallCheck {
     private HashTypeUsageCheck hashTypeUsageCheck = new HashTypeUsageCheck();
 
     public StreamToMapCollectorCallCheck() {
-        super(JAVA_UTIL_STREAM_COLLECTORS, METHOD_TO_MAP, 2);
+        super(JAVA_UTIL_STREAM_COLLECTORS, ImmutableMap.of(METHOD_TO_MAP, 2));
     }
 
     @Override
