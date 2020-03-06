@@ -24,7 +24,9 @@ public class TestGenerics {
         System.out.println(goodSet2);
 
         Set<TestGenerics> guavaBadSet1 = <warning descr="Not overridden equals()"><warning descr="Not overridden hashCode()">ImmutableSet.of(new TestGenerics())</warning></warning>;
+        Set<TestGenericsWithHashCodeAndEquals> guavaGoodSet1 = ImmutableSet.of(new TestGenericsWithHashCodeAndEquals());
         Set<TestGenerics> guavaBadSet2 = <warning descr="Not overridden equals()"><warning descr="Not overridden hashCode()">ImmutableSet.<TestGenerics> builder()</warning></warning>.add(new TestGenerics()).build();
+        Set<TestGenericsWithHashCodeAndEquals> guavaGoodSet2 = ImmutableSet.<TestGenericsWithHashCodeAndEquals> builder().add(new TestGenericsWithHashCodeAndEquals()).build();
     }
 
     public static class TestGenericsWithHashCode {
