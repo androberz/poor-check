@@ -23,6 +23,7 @@ package org.aber.plugins.poorcheck.helper.methods;
 
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.psi.PsiClassType;
+import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.PsiTypeMapper;
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
@@ -40,7 +41,9 @@ public abstract class AbstractHashTypesMethodCallCheck extends AbstractMethodCal
         super(jdkClassName, methodNameAndArgNumber);
     }
 
-    public void checkExpressionInferredType(PsiMethodCallExpressionImpl methodCallExpression, AnnotationHolder annotationHolder) {
+    public void checkExpressionInferredType(PsiMethodCallExpressionImpl methodCallExpression,
+                                            PsiMethodCallExpression warnCallExpression,
+                                            AnnotationHolder annotationHolder) {
         doIfNonNull(methodCallExpression.getType(), expressionInferredType -> {
 
             PsiType mappedType = expressionInferredType.accept(new PsiTypeMapper() {
@@ -62,8 +65,13 @@ public abstract class AbstractHashTypesMethodCallCheck extends AbstractMethodCal
             });
 
             doIfNonNull(mappedType, keyType -> {
-                hashTypeUsageCheck.checkHashTypeForMethodsPresence(keyType, methodCallExpression, annotationHolder);
+                hashTypeUsageCheck.checkHashTypeForMethodsPresence(keyType, warnCallExpression, annotationHolder);
             });
         });
+    }
+
+    public void checkExpressionInferredType(PsiMethodCallExpressionImpl methodCallExpression,
+                                            AnnotationHolder annotationHolder) {
+        checkExpressionInferredType(methodCallExpression, methodCallExpression, annotationHolder);
     }
 }
