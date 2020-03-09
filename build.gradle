@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'org.aber.plugins'
-version '1.0.0'
+version '1.0.2'
 
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
@@ -60,5 +60,10 @@ license {
 patchPluginXml {
     sinceBuild '181.*'
     untilBuild '193.*'
-    changeNotes """ Addidtional checks for Java code """
+    changeNotes """
+    Warn of possible poor code usage in Java.
+
+    Added support for Guava's ImmutableSet and ImmutableMap for hashCode()/equals() presense.
+    Added support for Java 11.
+"""
 }

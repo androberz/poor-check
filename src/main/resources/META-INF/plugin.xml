@@ -35,14 +35,15 @@
     <p>2. Not overridden equals() call;</p>
     <p>3. java.util.Optional isPresent() always returns true;</p>
     <p>4. Class with not overridden equals()/hashCode() methods is used as a key in a hash structures (including java.util.stream.Collectors toMap());</p>
-    <p>   Added support for Lombok's @EqualsAndHashCode</p>
+    <p>5. Added support for Lombok's @EqualsAndHashCode</p>
+    <p>6. Added support for Guava's ImmutableSet and ImmutableMap</p>
     </br>
     <p>When an above case occurs the warning is shown.</p>
     <p>An action to generate the missed code is proposed (Alt + Enter)</p>
 
     ]]></description>
 
-    <version>1.0.0</version>
+    <version>1.0.2</version>
 
     <depends>com.intellij.modules.java</depends>
 
