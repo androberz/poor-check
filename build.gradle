@@ -64,6 +64,7 @@ patchPluginXml {
     Warn of possible poor code usage in Java.
 
     Added support for Guava's ImmutableSet and ImmutableMap for hashCode()/equals() presense.
+    Added support for Optiona.isEmpty() check when always false.
     Added support for Java 11.
 """
 }

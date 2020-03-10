@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright © «2019» «ANDREY BEREZIN»
+ * Copyright © «2020» «ANDREY BEREZIN»
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the “Software”), to deal in the Software without restriction, including
@@ -32,15 +32,14 @@ import java.util.Objects;
 import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfInstanceIs;
 import static org.aber.plugins.poorcheck.helper.CheckUtils.doIfNonNull;
 
-public class IsPresentCallCheck extends AbstractMethodCallCheck {
+public abstract class AbstractOptionalMethodCallCheck extends AbstractMethodCallCheck {
 
     private static final String JAVA_UTIL_OPTIONAL = "java.util.Optional";
-    private static final String METHOD_IS_PRESENT = "isPresent";
+    private final String warnMessage;
 
-    private final String warnMessage = "Possibly always true";
-
-    public IsPresentCallCheck() {
-        super(JAVA_UTIL_OPTIONAL, ImmutableMap.of(METHOD_IS_PRESENT, 0));
+    public AbstractOptionalMethodCallCheck(String methodName, String warnMessage) {
+        super(JAVA_UTIL_OPTIONAL, ImmutableMap.of(methodName, 0));
+        this.warnMessage = warnMessage;
     }
 
     @Override

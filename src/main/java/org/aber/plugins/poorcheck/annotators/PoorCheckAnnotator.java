@@ -40,11 +40,12 @@ public class PoorCheckAnnotator implements Annotator {
 
     private final MethodCallCheck toStringCallCheck = new ToStringMethodCallCheck();
     private final MethodCallCheck equalsCallCheck = new EqualsMethodCallCheck();
-    private final MethodCallCheck isPresentCheck = new IsPresentCallCheck();
+    private final MethodCallCheck optionalIsPresentCheck = new OptionalIsPresentCallCheck();
+    private final MethodCallCheck optionalIsEmptyCheck = new OptionalIsEmptyCallCheck();
     private final TypeUsageCheck hashTypeUsageCheck = new HashTypeUsageCheck();
     private final MethodCallCheck toMapCollectorCheck = new StreamToMapCollectorCallCheck();
-    private final GuavaSetAssignmentCheck guavaSetAssignmentCheck = new GuavaSetAssignmentCheck();
-    private final GuavaMapAssignmentCheck guavaMapAssignmentCheck = new GuavaMapAssignmentCheck();
+    private final MethodCallCheck guavaSetAssignmentCheck = new GuavaSetAssignmentCheck();
+    private final MethodCallCheck guavaMapAssignmentCheck = new GuavaMapAssignmentCheck();
 
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
@@ -54,7 +55,8 @@ public class PoorCheckAnnotator implements Annotator {
                 doIfInstanceIs(element, PsiMethodCallExpression.class, psiMethodCallExpression -> {
                     toStringCallCheck.check(psiMethodCallExpression, holder);
                     equalsCallCheck.check(psiMethodCallExpression, holder);
-                    isPresentCheck.check(psiMethodCallExpression, holder);
+                    optionalIsPresentCheck.check(psiMethodCallExpression, holder);
+                    optionalIsEmptyCheck.check(psiMethodCallExpression, holder);
                     toMapCollectorCheck.check(psiMethodCallExpression, holder);
                     guavaSetAssignmentCheck.check(psiMethodCallExpression, holder);
                     guavaMapAssignmentCheck.check(psiMethodCallExpression, holder);

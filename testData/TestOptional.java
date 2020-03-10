@@ -17,5 +17,8 @@ public class TestOptional {
         if (opt1.flatMap(val -> opt2).isPresent()) {
             System.out.println("Good usage");
         }
+
+        opt1.map(val1 -> opt2).<warning descr="Possibly always false">isEmpty</warning>();
+        opt1.flatMap(val -> opt2).isEmpty();
     }
 }

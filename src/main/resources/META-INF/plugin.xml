@@ -34,9 +34,10 @@
     <p>1. Not overridden toString() call;</p>
     <p>2. Not overridden equals() call;</p>
     <p>3. java.util.Optional isPresent() always returns true;</p>
-    <p>4. Class with not overridden equals()/hashCode() methods is used as a key in a hash structures (including java.util.stream.Collectors toMap());</p>
-    <p>5. Added support for Lombok's @EqualsAndHashCode</p>
-    <p>6. Added support for Guava's ImmutableSet and ImmutableMap</p>
+    <p>4. java.util.Optional isEmpty() always returns false;</p>
+    <p>5. Class with not overridden equals()/hashCode() methods is used as a key in a hash structures (including java.util.stream.Collectors toMap());</p>
+    <p>6. Added support for Lombok's @EqualsAndHashCode</p>
+    <p>7. Added support for Guava's ImmutableSet and ImmutableMap</p>
     </br>
     <p>When an above case occurs the warning is shown.</p>
     <p>An action to generate the missed code is proposed (Alt + Enter)</p>
