@@ -66,19 +66,28 @@ abstract class AbstractMethodCallCheck extends AbstractCheck implements MethodCa
 
                         doIfNonNull(methodCallExpression.resolveMethod(), psiMethod -> {
 
-                            doIfNonNull(getPsiClass(psiMethod, jdkClassName), foundJdkClass -> {
+                            doIfNonNull(psiMethod.getContainingClass(), methodContainingClass -> {
 
-                                doIfNonNull(foundJdkClass.findMethodBySignature(psiMethod, false), jdkMethod -> {
+                                doIfNonNull(methodContainingClass.getQualifiedName(), qualifiedClassName -> {
 
-                                    MethodCallCheckData.MethodCallCheckDataBuilder methodCallCheckDataBuilder = MethodCallCheckData.builder()
-                                            .methodExpression(methodExpression)
-                                            .psiMethod(psiMethod);
+                                    if (qualifiedClassName.equals(jdkClassName)) {
 
-                                    Optional<PsiClass> targetClassOpt = Optional.ofNullable(methodExpression.getType()).map(PsiTypesUtil::getPsiClass);
+                                        doIfNonNull(getPsiClass(psiMethod, jdkClassName), foundJdkClass -> {
 
-                                    targetClassOpt.ifPresent(methodCallCheckDataBuilder::targetClass);
+                                            doIfNonNull(foundJdkClass.findMethodBySignature(psiMethod, false), jdkMethod -> {
 
-                                    consumer.accept(methodCallCheckDataBuilder.build());
+                                                MethodCallCheckData.MethodCallCheckDataBuilder methodCallCheckDataBuilder = MethodCallCheckData.builder()
+                                                        .methodExpression(methodExpression)
+                                                        .psiMethod(psiMethod);
+
+                                                Optional<PsiClass> targetClassOpt = Optional.ofNullable(methodExpression.getType()).map(PsiTypesUtil::getPsiClass);
+
+                                                targetClassOpt.ifPresent(methodCallCheckDataBuilder::targetClass);
+
+                                                consumer.accept(methodCallCheckDataBuilder.build());
+                                            });
+                                        });
+                                    }
                                 });
                             });
                         });

@@ -2,6 +2,7 @@ import java.lang.*;
 import java.util.*;
 import lombok.EqualsAndHashCode;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 
 public class TestGenerics {
 
@@ -27,6 +28,9 @@ public class TestGenerics {
         Set<TestGenericsWithHashCodeAndEquals> guavaGoodSet1 = ImmutableSet.of(new TestGenericsWithHashCodeAndEquals());
         Set<TestGenerics> guavaBadSet2 = <warning descr="Not overridden equals()"><warning descr="Not overridden hashCode()">ImmutableSet.<TestGenerics> builder()</warning></warning>.add(new TestGenerics()).build();
         Set<TestGenericsWithHashCodeAndEquals> guavaGoodSet2 = ImmutableSet.<TestGenericsWithHashCodeAndEquals> builder().add(new TestGenericsWithHashCodeAndEquals()).build();
+
+        List<TestGenerics> guavaList1 = ImmutableList.of(new TestGenerics());
+        List<TestGenerics> guavaList2 = ImmutableList.<TestGenerics> builder().add(new TestGenerics()).build();
     }
 
     public static class TestGenericsWithHashCode {
