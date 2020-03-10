@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'org.aber.plugins'
-version '1.0.2'
+version '1.0.1'
 
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
