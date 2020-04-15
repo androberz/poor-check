@@ -22,7 +22,7 @@ Go to plugins marketplace in the Settings, download and enable the plugin.
 
 
 ## Requirements 
-Supported Intellij Idea versions: 181.* - 193.*  
+Supported Intellij Idea versions: 181.* - 203.*  
 JDK 8 - 11
 
 ## Pull Requests

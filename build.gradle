@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'org.aber.plugins'
-version '1.0.1'
+version '1.0.2'
 
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
@@ -47,7 +47,7 @@ test {
 
 intellij {
     plugins 'java'
-    version '2019.3'
+    version '2020.1'
     sandboxDirectory = "$project.buildDir/poorcheck-sandbox"
     updateSinceUntilBuild false
 }
@@ -59,7 +59,7 @@ license {
 
 patchPluginXml {
     sinceBuild '181.*'
-    untilBuild '193.*'
+    untilBuild '203.*'
     changeNotes """
     Warn of possible poor code usage in Java.
 
